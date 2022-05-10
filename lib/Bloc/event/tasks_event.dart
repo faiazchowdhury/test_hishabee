@@ -12,6 +12,7 @@ class deleteTasks extends TasksEvent {
 
 class addtasks extends TasksEvent {
   final String description;
-
   addtasks(this.description);
 }
+
+class syncTasks extends TasksEvent {}

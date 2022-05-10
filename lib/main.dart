@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:test_hishabee/Bloc/bloc/tasks_bloc.dart';
 import 'package:test_hishabee/Pages/LoginPage.dart';
 import 'package:workmanager/workmanager.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Workmanager().initialize(
-      callbackDispatcher, // The top level function, aka callbackDispatcher
-      isInDebugMode:
-          true // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
-      );
-  Workmanager().registerOneOffTask("1", "simpleTask");
+  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
+  await Workmanager().registerPeriodicTask(
+    "1",
+    "Sync",
+    frequency: const Duration(minutes: 15),
+    constraints: Constraints(
+      networkType: NetworkType.connected,
+    ),
+  );
   runApp(const MyApp());
 }
 
 void callbackDispatcher() {
+  final bloc = TasksBloc();
   Workmanager().executeTask((task, inputData) {
-    print("Native called background task: ");
-    //simpleTask will be emitted here.
+    print("runnung");
+    bloc.add(syncTasks());
     return Future.value(true);
   });
 }

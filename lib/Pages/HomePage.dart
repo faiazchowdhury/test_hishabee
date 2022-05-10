@@ -79,6 +79,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   taskListNoInternet() {
+    print(OfflineTasksList.description.length);
     return ListView.builder(
       itemCount: OfflineTasksList.completed.length,
       itemBuilder: (BuildContext context, int index) {

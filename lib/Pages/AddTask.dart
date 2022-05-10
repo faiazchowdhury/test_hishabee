@@ -37,10 +37,9 @@ class _AddTaskState extends State<AddTask> {
                 create: (context) => bloc,
                 child: BlocListener(
                   listener: (BuildContext context, state) {
-                    if (state is TasksLoaded) {
-                      if (state.statusCode == 200) {
-                        Navigator.pop(context, state.response);
-                      }
+                    if (state is TasksLoaded ||
+                        state is TasksLoadedNoInternet) {
+                      Navigator.pop(context);
                     }
                   },
                   bloc: bloc,

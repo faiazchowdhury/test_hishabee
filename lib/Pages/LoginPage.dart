@@ -19,12 +19,8 @@ class _LoginPageState extends State<LoginPage> {
   final bloc = AuthenticationBloc();
 
   @override
-  Future<void> initState() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (prefs.get("token") != null) {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => HomePage()));
-    }
+  initState() {
+    checkLogin();
     emailController.text = "muh.nurali43@gmail.com";
     passController.text = "12345678";
     super.initState();
@@ -100,5 +96,13 @@ class _LoginPageState extends State<LoginPage> {
               "Continue",
               style: TextStyle(color: Colors.white),
             )));
+  }
+
+  Future<void> checkLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.get("token") != null) {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => HomePage()));
+    }
   }
 }
